@@ -31,7 +31,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'scrooloose/nerdtree'
 Plug 'vim-airline/vim-airline'
-Plug 'vimwiki/vimwiki'
+"Plug 'vimwiki/vimwiki'
 Plug 'ayu-theme/ayu-vim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -60,7 +60,7 @@ map <S-Tab> :bprevious<CR>
 nnoremap <leader>n :NERDTreeToggle<CR>
 " END NERDTree
 
-let g:vimwiki_list = [{'path': '~/wknotes/'}]
+"let g:vimwiki_list = [{'path': '~/wknotes/'}]
 
 " START NERDTree if no files are specified
 "autocmd StdinReadPre * let s:std_in=1
@@ -113,7 +113,7 @@ nnoremap <leader>tl :e ~/wknotes/to-do.wiki<cr>
 source ~/.config/nvim/lua/zettle.lua
 source ~/.config/nvim/lua/lsp-stuff.lua
 lua << END
-local home = vim.fn.expand("/Users/wes/zn")
+local home = vim.fn.expand("$HOME/notes")
 -- NOTE for Windows users:
 -- - don't use Windows
 -- - try WSL2 on Windows and pretend you're on Linux
@@ -173,7 +173,7 @@ require('telekasten').setup({
     -- image link style
     -- wiki:     ![[image name]]
     -- markdown: ![](image_subdir/xxxxx.png)
-    image_link_style = "wiki",
+    image_link_style = "markdown",
 
     -- default sort option: 'filename', 'modified'
     sort = "filename",
@@ -246,8 +246,23 @@ nnoremap <leader>zf :lua require('telekasten').find_notes()<CR>
 nnoremap <leader>zd :lua require('telekasten').find_daily_notes()<CR>
 nnoremap <leader>zg :lua require('telekasten').search_notes()<CR>
 nnoremap <leader>zz :lua require('telekasten').follow_link()<CR>
+nnoremap <leader>zC :CalendarT<CR>
+nnoremap <leader>zt :lua require('telekasten').toggle_todo()<CR>
+nnoremap <leader># :lua require('telekasten').show_tags()<CR>
 lua require'hop'.setup()
 map s <cmd>HopChar1<CR>
 omap s <cmd>HopChar1<CR>
 " on hesitation, bring up the panel
 nnoremap <leader>z :lua require('telekasten').panel()<CR>
+nnoremap <leader>zn :lua require('telekasten').new_note()<CR>
+nnoremap <leader>[[ <cmd>:lua require('telekasten').insert_link()<CR>
+"inoremap [[ <cmd>:lua require('telekasten').insert_link()<CR>
+" just blue and gray links
+"hi tkLink ctermfg=Blue cterm=bold,underline guifg=blue gui=bold,underline
+"hi tkBrackets ctermfg=gray guifg=gray
+" for gruvbox
+hi tklink ctermfg=72 guifg=#689d6a cterm=bold,underline gui=bold,underline
+hi tkBrackets ctermfg=gray guifg=gray
+hi link CalNavi CalRuler
+hi tkTagSep ctermfg=gray guifg=gray
+hi tkTag ctermfg=175 guifg=#d3869B
